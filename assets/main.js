@@ -48,14 +48,21 @@ function filterArr (obj){
 }
 
 //render shiki list
-
 function renderList(arr){
+    //clear the previous list
+    shikiList.textContent = "";
+
+    //create li element and populate with shiki name and append to Shiki List
     for (var i= 0; i<arr.length; i++){
         var shiki = arr[i];
         var liEl = document.createElement("li");
         liEl.textContent = shiki;
         shikiList.appendChild(liEl);
+    }
 
+    //if shiki list is empty let user know
+    if(shikiList.textContent === ""){
+        shikiList.textContent= "Sorry there are no Shikigami in the database right now with that ability"
     }
 }
 
