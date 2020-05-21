@@ -1,0 +1,49 @@
+html{
+    min-height: 100%;
+}
+body{
+    width: 100%;
+}
+
+.headerVertical{
+    height: 12vh;
+    position: relative; 
+    text-align: center;
+    width: 100%;
+    background-color: white;
+    color: #035e7b;
+    margin: 0;
+    padding: 0;
+}
+
+header a {
+    text-decoration: none;
+    color: #035e7b;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+a:hover{
+    text-emphasis: none;
+    text-decoration: none;
+    color: #035e7b;
+}
+
+.wrapper{
+    width: 80%;
+    margin:0 auto;
+}
+
+#shiki-List{
+    list-style-type: none;
+}
+
+#shiki-List li{
+    line-height: 1.5;
+    height: 25px;
+}
+

@@ -4,57 +4,82 @@ var frag = document.createDocumentFragment();
 var select = document.createElement("select");
 var button = document.getElementById("filter");
 var result = document.querySelector(".result");
-var shikiList = document.querySelector("#shiki-List")
+var shikiList = document.querySelector("#shiki-List");
 
 
 //selecting array
 var dataArr = spShiki;
 
+//eliminate underscores & capitalization
+function formatString(arr){
+    var placeholder = "";
 
-//dropdown menu based off current tag_names in array
-for(var i= 0; i<dataArr.length; i++){
-    var currentTag= dataArr[i].tag_name;
+    for (var i= 0; i<arr.length; i++){
+        placeholder = arr[i];
+        //console.log(placeholder);
+        placeholder = placeholder.replace(/_/g, " ");
+        //console.log(placeholder);
+        placeholder = placeholder.toLowerCase()
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ')
+
+        //console.log(placeholder)
+        arr[i] = placeholder;
+    }
+    //console.log(arr)
+    return arr
+}
+
+//dynamic dropdown
+var tagArr = []
+tagArr = Object.keys(dataArr[0]);
+tagArr = formatString(tagArr)
+for(var i = 1; i<tagArr.length; i++){
+    var currentTag = tagArr[i];
     select.options.add(new Option(currentTag));
     frag.appendChild(select);
     div.appendChild(frag);
 }
 
-//search the array for child object & return index
-function findTag(tag){
-    var tagFound = 0;
-    for(var i=0; i<dataArr.length; i++){        
-        var searchTag = dataArr[i].tag_name
-        if (searchTag === tag){
-            tagFound = i;
-            return tagFound;
-        }
-    }
+function getShikiNames(tag){
+    var tempShiki = [];
+    var shikiNames = [];
+    //console.log(dataArr.length)
+    //console.log(tag);
 
+    for(var i = 0; i<dataArr.length; i++){
+        tempShiki = dataArr[i];
+        //console.log(tempShiki.length)
+        for(var shikiTag in tempShiki){
+            //console.log(tempShiki[shikiTag])
+            if(shikiTag === tag && tempShiki[shikiTag]=== true) {
+                shikiNames.push(dataArr[i].shiki_name)
+            }
+            //console.log(`${shiki}: ${tempShiki[shiki]}`)
+        }  
+    }
+    return shikiNames
 }
 
-//filter object & return only true values
-function filterArr (obj){
-    var shikiArr= [];
+function unFormatString(tag){
+    tag = tag.split(' ').join('_')
+    //console.log(placeholder);
+    tag = tag.toLowerCase();
 
-    for(const shiki in obj){
-        if(obj[shiki] === true){
-            shikiArr.push(shiki);
-        }
-    }
-    // console.log("Here is one shikiArr")
-    // console.log(shikiArr)
-
-    return shikiArr;
+    console.log(tag);
+    return tag
 }
 
 //render shiki list
 function renderList(arr){
     //clear the previous list
     shikiList.textContent = "";
+    var shiki="";
 
     //create li element and populate with shiki name and append to Shiki List
     for (var i= 0; i<arr.length; i++){
-        var shiki = arr[i];
+        shiki = arr[i];
         var liEl = document.createElement("li");
         liEl.textContent = shiki;
         shikiList.appendChild(liEl);
@@ -66,22 +91,22 @@ function renderList(arr){
     }
 }
 
-//When selection occurs 
+//event listener
 select.addEventListener("change", (event)=>{
-    var tag = event.target.value;
-    var tagIndex;
+    var trueValArr=[];
+
+    //retrieve the selected key
+    var tag = event.target.value
+
+    //unformat string to match key object in array
+    tag = unFormatString(tag);
     
+    //get array with shiki_names that have the value of true for key
+    trueValArr = getShikiNames(tag);
+    //console.log(trueValArr);
 
-    tagIndex = findTag(tag);
-
-    //just selected tag object extracted into a smaller array
-    var tagTrueArr = dataArr[tagIndex];
-
-    tagTrueArr = filterArr(tagTrueArr);
-
-    result.textContent = "You have chosen to search for "+ tag +". The following shikigami have the ability you are looking for:";
-    
-    renderList(tagTrueArr);
-  
-
+    //proper cap & spaces between string in arr
+    trueValArr = formatString(trueValArr);
+    //render shiki list
+    renderList(trueValArr);
 })
