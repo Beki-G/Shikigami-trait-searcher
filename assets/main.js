@@ -9,10 +9,13 @@ var resultsCard = document.querySelector(".results_card")
 var shikiCard = document.querySelector(".shiki_card")
 var abilityList = document.querySelector("#abiliyList");
 var shikiName = document.querySelector(".shikiName");
+var tagCard = document.querySelector(".tag_card");
+var tagText = document.querySelector(".tagDefinition");
+var defHelp = document.querySelector(".defHelp");
 
 //selecting array-----> MAKE SURE THEY ARE LINKED IN HTML
 var dataArr = spShiki;
-
+var tagDefArr = tagDefinition;
 
 //eliminate underscores & capitalization
 function formatString(arr){
@@ -113,23 +116,28 @@ function renderList(arr){
     shikiList.textContent = "";
     var shiki="";
 
-    //create li element and populate with shiki name and append to Shiki List
-    for (var i= 0; i<arr.length; i++){
-        shiki = arr[i];
-        var liEl = document.createElement("li");
-        var aEl = document.createElement("a");
+    //check if arr is empty
+    if(arr.length===0){
+        result.textContent ="Sorry there are no Shikigami in the database right now with that ability";
+        shikiList.textContent= ""
+    } else{
 
-        aEl.href = "#";
-        aEl.textContent = shiki;
-        aEl.setAttribute("id", unFormatString(arr[i]));
-        liEl.appendChild(aEl);
-        shikiList.appendChild(liEl);
-    }
+        result.textContent= "Click on a name below for more information:"
+        for (var i= 0; i<arr.length; i++){
+            shiki = arr[i];
+            var liEl = document.createElement("li");
+            var aEl = document.createElement("a");
 
-    //if shiki list is empty let user know
-    if(shikiList.textContent === ""){
-        shikiList.textContent= "Sorry there are no Shikigami in the database right now with that ability"
-    }
+            aEl.href = "#";
+            aEl.textContent = shiki;
+            aEl.setAttribute("id", unFormatString(arr[i]));
+            aEl.setAttribute("style", "text-decoration: none; color: white;");
+            liEl.appendChild(aEl);
+            shikiList.appendChild(liEl);
+            shikiList.setAttribute("style", "list-style-type: none; text-align: left;");
+        }
+    }            
+
 };
 
 function shikiProfile(tag){
@@ -154,19 +162,52 @@ function shikiFilterArr(obj){
 
 function shikiAbilityRender(arr){
     abilityList.textContent="";
+    defHelp.textContent = "";
     var ability = "";
+    var defineHelp = "Click on any from the list above to see more info.";
 
     for(var i=0; i<arr.length; i++){
         ability = arr[i];
         var liEl = document.createElement("li");
-        liEl.textContent = ability;
+        var aEl= document.createElement("a");
+
+        aEl.href="#";
+        aEl.textContent =ability;
+        aEl.setAttribute("id", unFormatString(arr[i]));
+        aEl.setAttribute("style", "text-decoration: none; color: black;");
+        liEl.appendChild(aEl)
         abilityList.appendChild(liEl);
     }
+    var text = document.createTextNode(defineHelp);
+    defHelp.appendChild(text);
+
+}
+
+function findTagObj(tagName){
+    var tempTagArr = [];
+    var tempTagDef = "";
+
+    for(var i=0; i<tagDefinition.length; i++){
+        if (tagDefinition[i].tag === tagName){
+            tempTagDef = tagDefinition[i].tag;
+            tempTagDef = tempTagDef.replace(/_/g, " ");
+            tempTagDef = tempTagDef.toLowerCase()
+            .split(' ')
+            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(' ');
+            
+            tempTagDef = tempTagDef +": " +tagDefinition[i].tag_definition;
+        };
+    };
+    //console.log(tempTagDef);
+    return tempTagDef;
 }
 
 //event listener
 select.addEventListener("change", (event)=>{
     var trueValArr=[];
+    shikiCard.classList.add("invisible");
+    tagCard.classList.add("invisible");
 
     //retrieve the selected key
     var tag = event.target.value
@@ -196,7 +237,8 @@ resultsCard.addEventListener("click", (event)=>{
 
     //call a function that gets by the Tag and returns the true values of the object
     if(tag != ""){
-        shikiCard.classList.remove("invisible")
+        shikiCard.classList.remove("invisible");
+        tagCard.classList.add("invisible");
         formattedTag = tag.replace(/_/g, " ");
         formattedTag = formattedTag.toLowerCase()
         .split(' ')
@@ -209,7 +251,25 @@ resultsCard.addEventListener("click", (event)=>{
         shikiTrueArr = formatString(shikiTrueArr);
         shikiAbilityRender(shikiTrueArr);
     } else {
-        shikiCard.classList.add("invisible")
+        shikiCard.classList.add("invisible");
+        tagCard.classList.add("invisible");
     }
     
+})
+
+shikiCard.addEventListener("click", event =>{
+    var tagId = event.target.id;
+    var tagDef = "";
+
+    if(tagId != ""){
+        tagCard.classList.remove("invisible");
+        //console.log(tagId);
+        tagDef = findTagObj(tagId);
+        tagText.textContent = tagDef;
+    }else{
+        tagCard.classList.add("invisible");
+    }
+
+
+
 })

@@ -44,23 +44,11 @@ a:hover{
     margin: 0 auto;
 }
 
-#shiki-List{
-    list-style-type: none;
-    width: 50%;
-}
-
-#shiki-List li{
-    line-height: 1.5;
-    height: 25px;
-    list-style-type: none;
-}
-#shiki-List ul{
-    line-height: 1.5;
-    height: 25px;
-    list-style-type: none; 
-}
-
 .bg-dark-turquoise{
-    background-color: #34E4EA ;
+    background-color: black;
 }
 
+.results_card{
+    color:white;
+    text-align: center;
+}
