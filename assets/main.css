@@ -3,6 +3,7 @@ html{
 }
 body{
     width: 100%;
+    background-color: whitesmoke;
 }
 
 .headerVertical{
@@ -10,7 +11,6 @@ body{
     position: relative; 
     text-align: center;
     width: 100%;
-    background-color: white;
     color: #035e7b;
     margin: 0;
     padding: 0;
@@ -37,13 +37,30 @@ a:hover{
     width: 80%;
     margin:0 auto;
 }
+.info_text{
+    background-color: #035e7b;
+    color: white;
+    padding: 10px 10px 10px 10px;
+    margin: 0 auto;
+}
 
 #shiki-List{
     list-style-type: none;
+    width: 50%;
 }
 
 #shiki-List li{
     line-height: 1.5;
     height: 25px;
+    list-style-type: none;
+}
+#shiki-List ul{
+    line-height: 1.5;
+    height: 25px;
+    list-style-type: none; 
+}
+
+.bg-dark-turquoise{
+    background-color: #34E4EA ;
 }
 

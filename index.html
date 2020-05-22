@@ -19,21 +19,42 @@
 
     <main>
         <div class="wrapper">
-            <section>
-                <p>In the game of Onmyoji, there are over a hundred characters, called shikigami or shiki for short. Each shiki has active & passive skills that have contain different abilities or traits. Use the drop down menu below search for specific abilities or traits.   </p>
-            </section>
-            <div id = "container">
-                Select what you are looking for  
+
+            <div class = "card">
+                <section class = "info_text card-body rounded">
+                    <p>In the game of Onmyoji, there are over a hundred characters, called shikigami or shiki for short. Each shiki has active & passive skills that have contain different abilities or traits. Use the drop down menu below search for specific abilities or traits.</p>
+                
+                    <div id = "container">
+                        Select what you are looking for  
+                    </div>
+                </section>
             </div>
+
             <br>
-            <div class ="result"></div>
-            <ul id="shiki-List"></ul>
+            <div class= "row">
+                <div class = "card invisible w-50 results_card">
+                    <div class="card-body rounded bg-dark-turquoise">
+                        <div class ="result"></div>
+                        <ul id="shikiList"></ul>
+                    </div>
+                </div>
+
+                <div class = "card invisible w-50 shiki_card">
+                    <div class= "card-body rounded">
+                        <div class = "shikiName"></div>
+                        <br>
+                        <ul id="abiliyList"></ul>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>
 
     <!-- js data & logic for functions  -->
     <script src="./assets/spShikiData.js"></script>
+    <script src="./assets/tag_doc.js"></script>
+    <script src="./assets/shikiImgs.js"></script>
     <script src="./assets/main.js"></script>
     <!-- js for bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
