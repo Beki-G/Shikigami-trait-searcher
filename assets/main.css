@@ -25,6 +25,7 @@ header a {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    
 }
 
 a:hover{
@@ -51,4 +52,23 @@ a:hover{
 .results_card{
     color:white;
     text-align: center;
+}
+
+@media screen and (max-width:690px){
+    .wrapper{
+        width: 100%;
+    }
+    header a h1 {
+        font-size: 30px;
+    }
+
+}
+@media screen and (max-width:350px){
+    .wrapper{
+        width: 100%;
+    }
+    header a h1 {
+        font-size: 25px;
+    }
+
 }
