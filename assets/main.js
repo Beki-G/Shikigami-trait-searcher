@@ -205,6 +205,7 @@ function findTagObj(tagName){
 
 //event listener
 select.addEventListener("change", (event)=>{
+    event.preventDefault();
     var trueValArr=[];
     shikiCard.classList.add("invisible");
     tagCard.classList.add("invisible");
@@ -230,6 +231,7 @@ select.addEventListener("change", (event)=>{
 });
 
 resultsCard.addEventListener("click", (event)=>{
+    event.preventDefault();
     var shikiTrueArr =[];
     var tag = event.target.id;
     var formattedTag = "";
@@ -258,6 +260,7 @@ resultsCard.addEventListener("click", (event)=>{
 })
 
 shikiCard.addEventListener("click", event =>{
+    event.preventDefault();
     var tagId = event.target.id;
     var tagDef = "";
 
