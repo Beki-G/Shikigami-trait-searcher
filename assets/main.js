@@ -1,7 +1,7 @@
 //query selectors
 var div = document.querySelector("#container");
 var frag = document.createDocumentFragment();
-var select = document.createElement("select");
+var select = document.getElementById("initialClick");
 var button = document.getElementById("filter");
 var result = document.querySelector(".result");
 var shikiList = document.querySelector("#shikiList");
@@ -12,6 +12,8 @@ var shikiName = document.querySelector(".shikiName");
 var tagCard = document.querySelector(".tag_card");
 var tagText = document.querySelector(".tagDefinition");
 var defHelp = document.querySelector(".defHelp");
+var optionsList = document.getElementById("optionsList");
+var br = document.createElement("br")
 
 //selecting array-----> MAKE SURE THEY ARE LINKED IN HTML
 var dataArr = spShiki;
@@ -42,44 +44,15 @@ function formatString(arr){
 var tagArr = []
 tagArr = Object.keys(dataArr[0]);
 tagArr = formatString(tagArr)
-for(var i = 1; i<tagArr.length; i++){
-    var currentTag = tagArr[i];
-    select.options.add(new Option(currentTag));
-    frag.appendChild(select);
-    div.appendChild(frag);
+
+for (var i = 1;i<tagArr.length; i++){
+    var optionNode = document.createElement("option");
+    optionNode.value = tagArr[i];
+    optionNode.textContent = tagArr[i];
+    //console.log(optionNode)
+    optionsList.appendChild(optionNode);
 }
-
-//load tag definitions to card
-//loop through tags & stores as a single string both the key & object & stores in arr
-//render arr to tagsList
-
-// var tagDefArr = tagDefinition;
-// var strTagDef = "";
-// var tempTagArr =[];
-// var finalTagArr =[];
-
-// for (var i=0; i<tagDefArr.length; i++){
-//     tempTagArr.push(tagDefArr[i].tag)
-// }
-
-// tempTagArr = formatString(tempTagArr);
-
-// for (var i=0; i<tagDefArr.length; i++){
-//     // tempTagArr = tagDefArr[i].tag;
-//     // tempTagArr = formatString(tempTagArr);
-//     strTagDef = tempTagArr[i] +": "+ tagDefArr[i].tag_definition
-//     finalTagArr.push(strTagDef);
-// }
-
-// strTagDef = "";
-
-// for(var i=0; i<finalTagArr.length; i++){
-//     strTagDef = finalTagArr[i];
-//     var liEl = document.createElement("li");
-//     liEl.textContent = strTagDef;
-//     tagList.appendChild(liEl);
-// }
-
+//console.log(optionsList)
 
 function getShikiNames(tag){
     var tempShiki = [];
@@ -184,7 +157,6 @@ function shikiAbilityRender(arr){
 }
 
 function findTagObj(tagName){
-    var tempTagArr = [];
     var tempTagDef = "";
 
     for(var i=0; i<tagDefinition.length; i++){
@@ -206,6 +178,9 @@ function findTagObj(tagName){
 //event listener
 select.addEventListener("change", (event)=>{
     event.preventDefault();
+
+    //console.log(event.target.value)
+
     var trueValArr=[];
     shikiCard.classList.add("invisible");
     tagCard.classList.add("invisible");
