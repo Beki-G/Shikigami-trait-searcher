@@ -179,6 +179,7 @@ function findTagObj(tagName){
 select.addEventListener("change", (event)=>{
     event.preventDefault();
 
+    this.size=10;
     //console.log(event.target.value)
 
     var trueValArr=[];
@@ -204,6 +205,10 @@ select.addEventListener("change", (event)=>{
     //render shiki list
     renderList(trueValArr);
 });
+
+select.addEventListener("mousedown", function(){
+    this.size=10;
+})
 
 resultsCard.addEventListener("click", (event)=>{
     event.preventDefault();

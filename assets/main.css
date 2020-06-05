@@ -47,8 +47,22 @@ a:hover{
 
 .bg-dark-turquoise{
     background-color: black;
+    color:white;
 }
 
+.bg-odd-blue{
+    background-color:  #035e7b;
+    color:white;
+
+}
+
+.bg-odd-blue a{
+    color: white;
+    text-decoration: none;
+}
+#displayTags{
+    text-align: center;
+}
 .results_card{
     color:white;
     text-align: center;

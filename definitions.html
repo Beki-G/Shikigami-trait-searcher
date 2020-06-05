@@ -6,7 +6,7 @@
     <title>Shiki Ability Search</title>
 
     <!--Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/main.css">
 </head>
@@ -20,15 +20,19 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Search Database <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="./index.html">Search Database <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./definitions.html">Definitions</a>
+              <a class="nav-link" href="#">Definitions</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Future Favorites</a>
             </li>
           </ul>
+          <!-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form> -->
         </div>
       </nav>
 
@@ -41,43 +45,20 @@
         <div class="wrapper">
             <!-- Intro to page -->
             <div class = "card">
-                <section class = "info_text card-body rounded" id="initialClick">
-                    <p>In the game of Onmyoji, there are over a hundred characters, called shikigami or shiki for short. Each shiki has active & passive skills that have contain different abilities or traits. Use the drop down menu below search for specific abilities or traits.</p>
-                    <!-- Search input -->
-                    <div id = "container">
-                        Select what you are looking for  
-                    </div>
-                    <input list="optionsList" type="text" ><datalist id="optionsList"size="5"></datalist>
-                
+                <section class = "card-body rounded bg-odd-blue" id="displayTags">
+                    Check out the definitions below for more info
                 </section>
             </div>
 
             <br>
-            
-            <div class= "card-columns">
-                <!-- Results Card -->
-                <div class = "card invisible results_card">
-                    <div class="card-body rounded bg-dark-turquoise">
-                        <div class ="result">Click on a name below to see more information:</div>
-                        <br>
-                        <ul id="shikiList"></ul>
-                    </div>
-                </div>
-                <!-- Character Info -->
-                <div class = "card invisible shiki_card ">
-                    <div class= "card-body rounded">
-                        <div class = "shikiName"></div>
-                        <br>
-                        <ul id="abiliyList"></ul>
-                        <div class = "defHelp"></div>
-                    </div>
-                </div>
-                <!-- Tag Definitions -->
-                <div class = "card tag_card invisible">
-                    <div class= "card-body rounded">
-                        <div class = "tagDefinition"></div>
-                    </div>
-                </div>
+            <div class="card">
+                <section class="card-body rounded ">
+                    <input class="form-control" id="myInput" type="text" placeholder="Search.."/>
+                    <table id="tagTable"></table>
+
+                </section>
+            </div>
+
             </div>
         </div>
 
@@ -87,7 +68,7 @@
     <script src="./assets/spShikiData.js"></script>
     <script src="./assets/tag_doc.js"></script>
     <script src="./assets/shikiImgs.js"></script>
-    <script src="./assets/main.js"></script>
+    <script src="./assets/definitions.js"></script>
     <!-- js for bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
