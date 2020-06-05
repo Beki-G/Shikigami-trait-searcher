@@ -16,7 +16,7 @@ var optionsList = document.getElementById("optionsList");
 var br = document.createElement("br")
 
 //selecting array-----> MAKE SURE THEY ARE LINKED IN HTML
-var dataArr = spShiki;
+var dataArr = shikiData;
 var tagDefArr = tagDefinition;
 
 //eliminate underscores & capitalization
