@@ -94,9 +94,9 @@ function searchTable(){
     //console.log(tr)
 
     for (let i = 0; i < tr.length; i++) {
+        
         let tdArr = tr[i].getElementsByTagName("td");
-        //console.log(td);
-        //console.log(textValue)
+
         for (let j = 0; j<tdArr.length; j++){
             let td = tdArr[j];
             if (td!= null) {

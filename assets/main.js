@@ -179,9 +179,6 @@ function findTagObj(tagName){
 select.addEventListener("change", (event)=>{
     event.preventDefault();
 
-    this.size=10;
-    //console.log(event.target.value)
-
     var trueValArr=[];
     shikiCard.classList.add("invisible");
     tagCard.classList.add("invisible");
