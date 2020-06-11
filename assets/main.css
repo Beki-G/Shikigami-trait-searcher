@@ -68,6 +68,10 @@ a:hover{
     text-align: center;
 }
 
+#tagTable{
+    width: 100%;
+}
+
 @media screen and (max-width:690px){
     .wrapper{
         width: 100%;
