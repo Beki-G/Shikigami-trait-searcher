@@ -1,3 +1,11 @@
+let charactersList = document.getElementById("favoritesListed");
+let profileDiv = document.getElementById("characterProfiles")
+
+if(document.URL.includes("favorites.html")){
+    renderFavoriteCharacterList();
+};
+
+
 function isFavoritesLocalStorage(character){
     let favoritesArr = getFavortiesLocalStorage();
 
@@ -12,8 +20,20 @@ function isFavoritesLocalStorage(character){
     return false;
 }
 
-function listCharacterFavorites(){
+function renderFavoriteCharacterList(){
+    let characters = getFavortiesLocalStorage();
 
+    if(characters === null){
+        charactersList.textContent = "Your favorites will appear here"
+    }else{
+        characters.forEach(element=>{
+            let liEl = document.createElement("li");
+            liEl.textContent= formatStr(element.name);
+            liEl.setAttribute("style", "list-style: none;")
+            charactersList.appendChild(liEl);
+        })
+        getCharacterProfiles(characters);
+    }
 }
 
 function getFavortiesLocalStorage(){
@@ -61,7 +81,7 @@ function savesUpdatedArrayLocalStorage(arr){
     localStorage.setItem("charaFavorites", JSON.stringify(arr));
 }
 
-function removeFavoriteLocalStorage(character){
+function removeCharacterLocalStorage(character){
     let favoritesArr = getFavortiesLocalStorage();
     let index;
 
@@ -79,8 +99,46 @@ function removeFavoriteLocalStorage(character){
     let unfavorite = document.getElementById("starIcon");
     unfavorite.removeAttribute("style")
 
-    console.log("index is: "+ index)
-    console.log(favoritesArr)
-    console.log(character +" has been removed")
 }
 
+function getCharacterProfiles(arr){
+    let favoriteProfiles = [];
+
+    shikiData.forEach(profile =>{
+        arr.forEach(character => {
+            if(profile.shiki_name === character.name){
+                favoriteProfiles.push(profile)
+            }
+        })
+    })
+
+    favoriteProfiles.forEach(character =>{
+        renderCharacterProfile(character)
+    })
+}
+
+function renderCharacterProfile(charaObj){
+    let charaName = formatStr(charaObj.shiki_name)
+    let charaArr = shikiFilterArr(charaObj)
+
+    let cardEl = document.createElement("div");
+    cardEl.classList.add("card");
+    let cardBodyEl = document.createElement("div");
+    cardBodyEl.classList.add("card-body");
+    let nameEl = document.createElement("h5");
+    nameEl.classList.add("card-title");
+    nameEl.textContent = charaName;
+    let ulEl= document.createElement("ul");
+
+    charaArr.forEach(ability =>{
+        let liEl = document.createElement("li");
+        liEl.textContent = formatStr(ability);
+        ulEl.appendChild(liEl)
+    })
+
+    cardBodyEl.appendChild(nameEl);
+    cardBodyEl.appendChild(ulEl);    
+    cardEl.appendChild(cardBodyEl);
+    profileDiv.appendChild(cardEl);
+
+}

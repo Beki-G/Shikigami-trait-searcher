@@ -1,0 +1,33 @@
+#favoritesListed{
+    border: 1px dashed black ;
+    float: left;
+    text-align: center;  
+    padding: 4px;
+    border-radius: .25em;
+    margin-right: 10px;
+    background-color: black;
+    color: white
+}
+#favorites-intro{
+    border-radius: .25em;
+    background-color: #035e7b;
+    color: white;
+    padding: 10px;
+}
+.card-columns{
+    justify-content: center;
+}
+
+.container{
+    width: 75%;
+}
+
+@media screen and (max-width:690px){
+    #favoritesListed{
+        width: 100%;
+        float: none;
+    }
+    .card-columns{
+        width: 100%;
+    }
+}

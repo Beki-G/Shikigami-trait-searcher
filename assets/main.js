@@ -13,11 +13,23 @@ var tagCard = document.querySelector(".tag_card");
 var tagText = document.querySelector(".tagDefinition");
 var defHelp = document.querySelector(".defHelp");
 var optionsList = document.getElementById("optionsList");
-var br = document.createElement("br")
+var br = document.createElement("br");
 
 //selecting array-----> MAKE SURE THEY ARE LINKED IN HTML
 var dataArr = shikiData;
 var tagDefArr = tagDefinition;
+
+
+function formatStr(str){
+    let placeholder = str;
+    placeholder = placeholder.replace(/_/g, " ");
+    placeholder = placeholder.toLowerCase()
+    .split(' ')
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(' ');
+    
+    return placeholder;
+}
 
 //eliminate underscores & capitalization
 function formatString(arr){
@@ -40,19 +52,122 @@ function formatString(arr){
     return arr
 }
 
-//dynamic dropdown
-var tagArr = []
-tagArr = Object.keys(dataArr[0]);
-tagArr = formatString(tagArr)
+if(document.URL.includes("index.html")){
+    //dynamic dropdown
+    var tagArr = []
+    tagArr = Object.keys(dataArr[0]);
+    tagArr = formatString(tagArr)
 
-for (var i = 1;i<tagArr.length; i++){
-    var optionNode = document.createElement("option");
-    optionNode.value = tagArr[i];
-    optionNode.textContent = tagArr[i];
-    //console.log(optionNode)
-    optionsList.appendChild(optionNode);
+    for (var i = 1;i<tagArr.length; i++){
+        var optionNode = document.createElement("option");
+        optionNode.value = tagArr[i];
+        optionNode.textContent = tagArr[i];
+        optionsList.appendChild(optionNode);
+    }
+
+    
+    //event listener
+    select.addEventListener("change", (event)=>{
+        event.preventDefault();
+    
+        var trueValArr=[];
+        shikiCard.classList.add("invisible");
+        tagCard.classList.add("invisible");
+    
+        //retrieve the selected key
+        var tag = event.target.value
+    
+        //unformat string to match key object in array
+        tag = unFormatString(tag);
+        
+        //get array with shiki_names that have the value of true for key
+        trueValArr = getShikiNames(tag);
+        //console.log(trueValArr);
+    
+        //proper cap & spaces between string in arr
+        trueValArr = formatString(trueValArr);
+    
+        resultsCard.classList.remove("invisible");
+        //listCard.classList.remove("invisible");
+    
+        //render shiki list
+        renderList(trueValArr);
+    });
+    
+    
+    resultsCard.addEventListener("click", (event)=>{
+        event.preventDefault();
+        var shikiTrueArr =[];
+        var tag = event.target.id;
+        var formattedTag = "";
+        //shikiCard.textContent = tag;
+    
+        //call a function that gets by the Tag and returns the true values of the object
+        if(tag !== ""){
+            shikiCard.classList.remove("invisible");
+            tagCard.classList.add("invisible");
+            shikiName.textContent="";
+                 
+            formattedTag = tag.replace(/_/g, " ");
+            formattedTag = formattedTag.toLowerCase()
+            .split(' ')
+            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(' ');
+    
+            let iEl = document.createElement("i");
+            iEl.classList.add("fas");
+            iEl.classList.add("fa-star");
+            iEl.setAttribute("id", "starIcon")
+            
+            if(isFavoritesLocalStorage(tag)){
+                iEl.setAttribute("style", "color:yellow;")
+            }
+            
+            shikiName.append(iEl);
+            let introStr = " "+formattedTag +" has the following abilities as well:";
+    
+            shikiName.append(introStr)
+            
+            shikiTrueArr = shikiProfile(tag);
+            shikiTrueArr = shikiFilterArr(shikiTrueArr);
+            shikiTrueArr = formatString(shikiTrueArr);
+            shikiAbilityRender(shikiTrueArr);
+        } else {
+            shikiCard.classList.add("invisible");
+            tagCard.classList.add("invisible");
+        }
+    
+        shikiName.setAttribute("id", tag)
+        
+    })
+    
+    shikiCard.addEventListener("click", event =>{
+        event.preventDefault();
+        var tagId = event.target.id;
+        var tagDef = "";
+    
+        console.log(tagId)
+        if(tagId != ""&& tagId !=="starIcon"){
+            tagCard.classList.remove("invisible");
+            tagDef = findTagObj(tagId);
+            tagText.textContent = tagDef;
+        }else if (tagId ==="starIcon"){
+            if(isFavoritesLocalStorage(shikiName.id)){
+                removeCharacterLocalStorage(shikiName.id)
+            }else{
+                savesCharacterLocalStorage(shikiName.id)
+            }
+    
+        }else{
+            tagCard.classList.add("invisible");
+        }
+    
+    
+    
+    })
+
+
 }
-//console.log(optionsList)
 
 function getShikiNames(tag){
     var tempShiki = [];
@@ -175,102 +290,3 @@ function findTagObj(tagName){
     return tempTagDef;
 }
 
-//event listener
-select.addEventListener("change", (event)=>{
-    event.preventDefault();
-
-    var trueValArr=[];
-    shikiCard.classList.add("invisible");
-    tagCard.classList.add("invisible");
-
-    //retrieve the selected key
-    var tag = event.target.value
-
-    //unformat string to match key object in array
-    tag = unFormatString(tag);
-    
-    //get array with shiki_names that have the value of true for key
-    trueValArr = getShikiNames(tag);
-    //console.log(trueValArr);
-
-    //proper cap & spaces between string in arr
-    trueValArr = formatString(trueValArr);
-
-    resultsCard.classList.remove("invisible");
-    //listCard.classList.remove("invisible");
-
-    //render shiki list
-    renderList(trueValArr);
-});
-
-
-resultsCard.addEventListener("click", (event)=>{
-    event.preventDefault();
-    var shikiTrueArr =[];
-    var tag = event.target.id;
-    var formattedTag = "";
-    //shikiCard.textContent = tag;
-
-    //call a function that gets by the Tag and returns the true values of the object
-    if(tag !== ""){
-        shikiCard.classList.remove("invisible");
-        tagCard.classList.add("invisible");
-        shikiName.textContent="";
-             
-        formattedTag = tag.replace(/_/g, " ");
-        formattedTag = formattedTag.toLowerCase()
-        .split(' ')
-        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(' ');
-
-        let iEl = document.createElement("i");
-        iEl.classList.add("fas");
-        iEl.classList.add("fa-star");
-        iEl.setAttribute("id", "starIcon")
-        
-        if(isFavoritesLocalStorage(tag)){
-            iEl.setAttribute("style", "color:yellow;")
-        }
-        
-        shikiName.append(iEl);
-        let introStr = " "+formattedTag +" has the following abilities as well:";
-
-        shikiName.append(introStr)
-        
-        shikiTrueArr = shikiProfile(tag);
-        shikiTrueArr = shikiFilterArr(shikiTrueArr);
-        shikiTrueArr = formatString(shikiTrueArr);
-        shikiAbilityRender(shikiTrueArr);
-    } else {
-        shikiCard.classList.add("invisible");
-        tagCard.classList.add("invisible");
-    }
-
-    shikiName.setAttribute("id", tag)
-    
-})
-
-shikiCard.addEventListener("click", event =>{
-    event.preventDefault();
-    var tagId = event.target.id;
-    var tagDef = "";
-
-    console.log(tagId)
-    if(tagId != ""&& tagId !=="starIcon"){
-        tagCard.classList.remove("invisible");
-        tagDef = findTagObj(tagId);
-        tagText.textContent = tagDef;
-    }else if (tagId ==="starIcon"){
-        if(isFavoritesLocalStorage(shikiName.id)){
-            removeFavoriteLocalStorage(shikiName.id)
-        }else{
-            savesCharacterLocalStorage(shikiName.id)
-        }
-
-    }else{
-        tagCard.classList.add("invisible");
-    }
-
-
-
-})
