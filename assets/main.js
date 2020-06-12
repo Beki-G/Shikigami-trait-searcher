@@ -203,9 +203,6 @@ select.addEventListener("change", (event)=>{
     renderList(trueValArr);
 });
 
-select.addEventListener("mousedown", function(){
-    this.size=10;
-})
 
 resultsCard.addEventListener("click", (event)=>{
     event.preventDefault();
@@ -215,16 +212,31 @@ resultsCard.addEventListener("click", (event)=>{
     //shikiCard.textContent = tag;
 
     //call a function that gets by the Tag and returns the true values of the object
-    if(tag != ""){
+    if(tag !== ""){
         shikiCard.classList.remove("invisible");
         tagCard.classList.add("invisible");
+        shikiName.textContent="";
+             
         formattedTag = tag.replace(/_/g, " ");
         formattedTag = formattedTag.toLowerCase()
         .split(' ')
         .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
         .join(' ');
 
-        shikiName.textContent = formattedTag +" has the following abilities as well:";
+        let iEl = document.createElement("i");
+        iEl.classList.add("fas");
+        iEl.classList.add("fa-star");
+        iEl.setAttribute("id", "starIcon")
+        
+        if(isFavoritesLocalStorage(tag)){
+            iEl.setAttribute("style", "color:yellow;")
+        }
+        
+        shikiName.append(iEl);
+        let introStr = " "+formattedTag +" has the following abilities as well:";
+
+        shikiName.append(introStr)
+        
         shikiTrueArr = shikiProfile(tag);
         shikiTrueArr = shikiFilterArr(shikiTrueArr);
         shikiTrueArr = formatString(shikiTrueArr);
@@ -233,6 +245,8 @@ resultsCard.addEventListener("click", (event)=>{
         shikiCard.classList.add("invisible");
         tagCard.classList.add("invisible");
     }
+
+    shikiName.setAttribute("id", tag)
     
 })
 
@@ -241,11 +255,18 @@ shikiCard.addEventListener("click", event =>{
     var tagId = event.target.id;
     var tagDef = "";
 
-    if(tagId != ""){
+    console.log(tagId)
+    if(tagId != ""&& tagId !=="starIcon"){
         tagCard.classList.remove("invisible");
-        //console.log(tagId);
         tagDef = findTagObj(tagId);
         tagText.textContent = tagDef;
+    }else if (tagId ==="starIcon"){
+        if(isFavoritesLocalStorage(shikiName.id)){
+            removeFavoriteLocalStorage(shikiName.id)
+        }else{
+            savesCharacterLocalStorage(shikiName.id)
+        }
+
     }else{
         tagCard.classList.add("invisible");
     }

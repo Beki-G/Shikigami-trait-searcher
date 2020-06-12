@@ -72,6 +72,11 @@ a:hover{
     width: 100%;
 }
 
+.fa-star:hover{
+    color: yellow;
+    cursor: pointer;
+}
+
 @media screen and (max-width:690px){
     .wrapper{
         width: 100%;
