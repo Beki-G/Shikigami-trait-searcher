@@ -1,12 +1,17 @@
 #favoritesListed{
-    border: 1px dashed black ;
-    float: left;
     text-align: center;  
     padding: 4px;
     border-radius: .25em;
-    margin-right: 10px;
+    
+}
+#favoritesDiv{
+    float: left;
     background-color: black;
-    color: white
+    color: white;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    margin-right: 10px;
 }
 #favorites-intro{
     border-radius: .25em;
@@ -23,11 +28,28 @@
 }
 
 @media screen and (max-width:690px){
-    #favoritesListed{
+    #favoritesDiv{
         width: 100%;
         float: none;
     }
     .card-columns{
         width: 100%;
+        column-count: 1;
+    }
+    .container{
+        width: 100%;
+    }
+}
+@media screen and (max-width:1024px){
+    #favoritesDiv{
+        width: 100%;
+        float: none;
+    }
+    .container{
+        width: 100%;
+    }
+    .card-columns{
+        width: 100%;
+        column-count: 2;
     }
 }

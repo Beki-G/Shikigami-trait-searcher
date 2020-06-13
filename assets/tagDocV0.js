@@ -160,7 +160,7 @@ const tagDefinition = [
     "tag_definition": "has a skill that can apply the defense up buff"
   },
   {
-    "tag": "dispel_ buff_foe_team",
+    "tag": "dispel_buff_foe_team",
     "tag_definition": "dispels buff(s) on opposing team"
   },
   {

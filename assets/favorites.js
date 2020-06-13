@@ -1,10 +1,20 @@
 let charactersList = document.getElementById("favoritesListed");
-let profileDiv = document.getElementById("characterProfiles")
+let profileDiv = document.getElementById("characterProfiles");
+let favortiesDiv = document.querySelector("#favoritesDiv");
 
 if(document.URL.includes("favorites.html")){
     renderFavoriteCharacterList();
-};
 
+    favortiesDiv.addEventListener("click", function(event){
+        let targetId = event.target.id;
+
+        if (targetId=== "clearFavorites"){
+           localStorage.removeItem("charaFavorites"); 
+           location.reload();
+        }
+    })
+
+};
 
 function isFavoritesLocalStorage(character){
     let favoritesArr = getFavortiesLocalStorage();
@@ -26,12 +36,20 @@ function renderFavoriteCharacterList(){
     if(characters === null){
         charactersList.textContent = "Your favorites will appear here"
     }else{
+        let button = document.createElement("button");
+        button.textContent = "Clear Favorites";
+        button.setAttribute("id", "clearFavorites");
+        favortiesDiv.appendChild(button);
+
+
+
         characters.forEach(element=>{
             let liEl = document.createElement("li");
             liEl.textContent= formatStr(element.name);
             liEl.setAttribute("style", "list-style: none;")
             charactersList.appendChild(liEl);
         })
+
         getCharacterProfiles(characters);
     }
 }
