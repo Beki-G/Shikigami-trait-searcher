@@ -91,7 +91,9 @@ if(document.URL.includes("index.html")){
         //listCard.classList.remove("invisible");
     
         //render shiki list
-        renderList(trueValArr);
+        renderList(trueValArr, tag);
+        
+        event.target.value = "";
     });
     
     
@@ -199,18 +201,18 @@ function unFormatString(tag){
 };
 
 //render shiki list
-function renderList(arr){
+function renderList(arr, ability){
     //clear the previous list
     shikiList.textContent = "";
     var shiki="";
 
     //check if arr is empty
     if(arr.length===0){
-        result.textContent ="Sorry there are no Shikigami in the database right now with that ability";
+        result.textContent ="Sorry there are no Shikigami in the database right now with "+formatStr(ability)+".";
         shikiList.textContent= ""
     } else{
 
-        result.textContent= "Click on a name below for more information:"
+        result.textContent= "The following have "+formatStr(ability)+". Click on a name below for more information:"
         for (var i= 0; i<arr.length; i++){
             shiki = arr[i];
             var liEl = document.createElement("li");
