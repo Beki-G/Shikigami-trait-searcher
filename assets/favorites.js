@@ -1,12 +1,17 @@
 let charactersList = document.getElementById("favoritesListed");
 let profileDiv = document.getElementById("characterProfiles");
 let favortiesDiv = document.querySelector("#favoritesDiv");
+let modalButton = document.getElementById("favorites-intro");
+let modalBody = document.querySelector("#checkBoxesModal");
+let modalContent = document.querySelector(".modal-content");
 
 if(document.URL.includes("favorites.html")){
     renderFavoriteCharacterList();
 
     favortiesDiv.addEventListener("click", function(event){
+        event.preventDefault();
         let targetId = event.target.id;
+        console.log(targetId)
 
         if (targetId=== "clearFavorites"){
            localStorage.removeItem("charaFavorites"); 
@@ -14,7 +19,52 @@ if(document.URL.includes("favorites.html")){
         }
     })
 
+    modalButton.addEventListener("click", function(event){
+        event.preventDefault();
+        renderAllCharacters();
+    })
+
+
+    modalContent.addEventListener("click", function(event){
+        // event.preventDefault();
+        if(event.target.id==="addFavorites"){
+            quickAddFavorites();
+        };
+    })
+
 };
+function quickAddFavorites(){
+    let checkBoxesEls = modalContent.getElementsByTagName("input");
+
+    Array.from(checkBoxesEls).forEach(checkbox =>{
+        if(checkbox.checked){
+            savesCharacterLocalStorage(checkbox.id);
+        }
+    })
+
+    location.reload();
+
+}
+
+function renderAllCharacters(){
+    
+    shikiData.forEach(profile =>{
+        let checkBoxEl = document.createElement("input");
+        checkBoxEl.setAttribute("type", "checkbox");
+        checkBoxEl.setAttribute("id",profile.shiki_name);
+
+        let checkLabelEl = document.createElement("label");
+        checkLabelEl.setAttribute("for", profile.shiki_name);
+        checkLabelEl.textContent = formatStr(profile.shiki_name);
+
+        let divEl = document.createElement("div");
+
+        divEl.appendChild(checkBoxEl);
+        divEl.appendChild(checkLabelEl);
+
+       modalBody.appendChild(divEl);
+    })
+}
 
 function isFavoritesLocalStorage(character){
     let favoritesArr = getFavortiesLocalStorage();
@@ -36,19 +86,27 @@ function renderFavoriteCharacterList(){
     if(characters === null){
         charactersList.textContent = "Your favorites will appear here"
     }else{
-        let button = document.createElement("button");
-        button.textContent = "Clear Favorites";
-        button.setAttribute("id", "clearFavorites");
-        favortiesDiv.appendChild(button);
-
-
+        favortiesDiv.textContent="";
+        
+        let ulEl = document.createElement("ul");
+        ulEl.setAttribute("id", "favoritesListed");
+        ulEl.textContent="Favorites";
+        ulEl.style.fontWeight="bold";
 
         characters.forEach(element=>{
             let liEl = document.createElement("li");
             liEl.textContent= formatStr(element.name);
-            liEl.setAttribute("style", "list-style: none;")
-            charactersList.appendChild(liEl);
+            liEl.setAttribute("style", "list-style: none;");
+            liEl.style.fontWeight ="initial"
+            ulEl.appendChild(liEl);
         })
+
+        favortiesDiv.appendChild(ulEl);
+
+        let button = document.createElement("button");
+        button.textContent = "Clear Favorites";
+        button.setAttribute("id", "clearFavorites");
+        favortiesDiv.appendChild(button);
 
         getCharacterProfiles(characters);
     }
@@ -95,9 +153,11 @@ function savesCharacterLocalStorage(character){
         userFavorites.push(favoriteChara);
         savesUpdatedArrayLocalStorage(userFavorites);
     }
-    let fillStar = document.getElementById("starIcon");
-    fillStar.setAttribute("style", "color: yellow" );
 
+    if(document.URL.includes("index.html")){
+        let fillStar = document.getElementById("starIcon");
+        fillStar.setAttribute("style", "color: yellow" );
+    }
     console.log(character+" has been saved")
     console.log(userFavorites)
 }
