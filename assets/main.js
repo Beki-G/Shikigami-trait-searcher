@@ -14,6 +14,7 @@ var tagText = document.querySelector(".tagDefinition");
 var defHelp = document.querySelector(".defHelp");
 var optionsList = document.getElementById("optionsList");
 var br = document.createElement("br");
+let isFavsTraitsOnly = document.getElementById("listFavoritesTraits");
 
 //selecting array-----> MAKE SURE THEY ARE LINKED IN HTML
 var dataArr = shikiData;
@@ -37,18 +38,14 @@ function formatString(arr){
 
     for (var i= 0; i<arr.length; i++){
         placeholder = arr[i];
-        //console.log(placeholder);
         placeholder = placeholder.replace(/_/g, " ");
-        //console.log(placeholder);
         placeholder = placeholder.toLowerCase()
         .split(' ')
         .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
         .join(' ')
 
-        //console.log(placeholder)
         arr[i] = placeholder;
     }
-    //console.log(arr)
     return arr
 }
 
@@ -64,7 +61,6 @@ if(document.URL.includes("index.html")){
         optionNode.textContent = tagArr[i];
         optionsList.appendChild(optionNode);
     }
-
     
     //event listener
     select.addEventListener("change", (event)=>{
@@ -75,25 +71,28 @@ if(document.URL.includes("index.html")){
         tagCard.classList.add("invisible");
     
         //retrieve the selected key
-        var tag = event.target.value
-    
-        //unformat string to match key object in array
-        tag = unFormatString(tag);
         
-        //get array with shiki_names that have the value of true for key
-        trueValArr = getShikiNames(tag);
-        //console.log(trueValArr);
-    
-        //proper cap & spaces between string in arr
-        trueValArr = formatString(trueValArr);
-    
-        resultsCard.classList.remove("invisible");
-        //listCard.classList.remove("invisible");
-    
-        //render shiki list
-        renderList(trueValArr, tag);
+        if(event.target.id==="listFavoritesTraits"){
+            toggleDropdown();
+        }else{
+            var tag = event.target.value
+            //unformat string to match key object in array
+            tag = unFormatString(tag);
+            
+            //get array with shiki_names that have the value of true for key
+            trueValArr = getShikiNames(tag);
         
-        event.target.value = "";
+            //proper cap & spaces between string in arr
+            trueValArr = formatString(trueValArr);
+        
+            resultsCard.classList.remove("invisible");
+            //listCard.classList.remove("invisible");
+        
+            //render shiki list
+            renderList(trueValArr, tag);
+            
+            event.target.value = "";
+        }
     });
     
     
@@ -148,7 +147,6 @@ if(document.URL.includes("index.html")){
         var tagId = event.target.id;
         var tagDef = "";
     
-        console.log(tagId)
         if(tagId != ""&& tagId !=="starIcon"){
             tagCard.classList.remove("invisible");
             tagDef = findTagObj(tagId);
@@ -169,6 +167,60 @@ if(document.URL.includes("index.html")){
     })
 
 
+}
+function toggleDropdown(){
+    
+    if(isLocalStorage() && isFavsTraitsOnly.checked){
+        while(optionsList.firstChild){
+            optionsList.removeChild(optionsList.firstChild)
+        }
+        
+        let allSkillsArr=[];
+        let uniqueSkillsArr=[];
+
+        let favoriteCharacters = getFavortiesLocalStorage();
+
+        favoriteCharacters.forEach(character=>{
+            dataArr.forEach(profile=>{
+                if(character.name=== profile.shiki_name){
+                    let tempArr =shikiFilterArr(profile);
+                    allSkillsArr =tempArr.concat(allSkillsArr)
+                }
+            })
+        })
+        
+        allSkillsArr.forEach(ability=>{
+            if(!uniqueSkillsArr.includes(ability)){
+                uniqueSkillsArr.push(ability)
+            }
+        })
+
+        uniqueSkillsArr.sort()
+        uniqueSkillsArr.forEach(ability=>{
+            let optionNode = document.createElement("option");
+            optionNode.value = formatStr(ability);
+            optionNode.textContent = formatStr(ability);
+            optionsList.appendChild(optionNode);
+        })
+    }else{
+        if(!isLocalStorage()){
+            alert("No favorites have been selected!")
+            isFavsTraitsOnly.checked = false;
+        }
+        while(optionsList.firstChild){
+            optionsList.removeChild(optionsList.firstChild)
+        }
+        var tagArr = []
+        tagArr = Object.keys(dataArr[0]);
+        tagArr = formatString(tagArr)
+    
+        for (var i = 1;i<tagArr.length; i++){
+            var optionNode = document.createElement("option");
+            optionNode.value = tagArr[i];
+            optionNode.textContent = tagArr[i];
+            optionsList.appendChild(optionNode);
+        }
+    }  
 }
 
 function getShikiNames(tag){
@@ -193,10 +245,8 @@ function getShikiNames(tag){
 
 function unFormatString(tag){
     tag = tag.split(' ').join('_')
-    //console.log(placeholder);
     tag = tag.toLowerCase();
 
-    //console.log(tag);
     return tag
 };
 
@@ -288,7 +338,5 @@ function findTagObj(tagName){
             tempTagDef = tempTagDef +": " +tagDefinition[i].tag_definition;
         };
     };
-    //console.log(tempTagDef);
     return tempTagDef;
 }
-

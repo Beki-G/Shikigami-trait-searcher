@@ -54,6 +54,13 @@ function renderFavoriteCharacterList(){
     }
 }
 
+function isLocalStorage(){
+    if("charaFavorites" in localStorage){
+        return true;
+    }
+    return false
+}
+
 function getFavortiesLocalStorage(){
     if("charaFavorites" in localStorage){
         let jsonstr = localStorage.getItem("charaFavorites");
