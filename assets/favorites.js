@@ -47,6 +47,7 @@ function quickAddFavorites(){
 }
 
 function renderAllCharacters(){
+    modalBody.textContent="";
     
     shikiData.forEach(profile =>{
         let checkBoxEl = document.createElement("input");
