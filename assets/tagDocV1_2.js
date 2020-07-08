@@ -1,4 +1,4 @@
-const tagDefinition = [
+const tagDefinition =[
   {
     "tag": "aoe_cc",
     "tag_definition": "has a skill that innately can inflict cc on the opposing team"
@@ -33,7 +33,7 @@ const tagDefinition = [
   },
   {
     "tag": "auto_effect_activation",
-    "tag_definition": "has a skill that allows a skill or effect to automatically activate outside of their turn.  IE dodomeki, jizu, seawatch kingyo"
+    "tag_definition": "has a skill that allows a skill or effect to automatically activate outside of their turn.  IE Dodomeki, Jizu, Seawatch Kingyo"
   },
   {
     "tag": "auto_target_highest_max",
@@ -54,6 +54,10 @@ const tagDefinition = [
   {
     "tag": "auto_target_second_lowest",
     "tag_definition": "when set to auto without a target marker will use skills on the next to lowest hp %"
+  },
+  {
+    "tag": "base_chance",
+    "tag_definition": "has a skill with a base chance that is affected by the effect hit stat"
   },
   {
     "tag": "beyond_death",
@@ -77,7 +81,7 @@ const tagDefinition = [
   },
   {
     "tag": "bypass_souls",
-    "tag_definition": "has a skill that bypasses the souls of the target.  Note: do not include indirect damage, only skills that specify they bypass souls"
+    "tag_definition": "has a skill that bypasses the souls of the target.  Note: Does not include indirect damage, only skills that specify they bypass souls"
   },
   {
     "tag": "call_to_arms",
@@ -85,7 +89,7 @@ const tagDefinition = [
   },
   {
     "tag": "co-op_chance",
-    "tag_definition": "has a skill that can initiate a co-op normal attack when an ally uses a normal attack"
+    "tag_definition": "has a skill that can initiate a co-op normal attack when an ally uses a normal attack or when a named unit attacks"
   },
   {
     "tag": "confuse",
@@ -93,7 +97,7 @@ const tagDefinition = [
   },
   {
     "tag": "cooldown",
-    "tag_definition": "has a skill with a cooldown"
+    "tag_definition": "has a skill or effect that has a cooldown before it can be used agian"
   },
   {
     "tag": "counter_attack",
@@ -158,6 +162,30 @@ const tagDefinition = [
   {
     "tag": "defense_up",
     "tag_definition": "has a skill that can apply the defense up buff"
+  },
+  {
+    "tag": "description_animal",
+    "tag_definition": "is defined in area boss as a animal"
+  },
+  {
+    "tag": "description_female",
+    "tag_definition": "is defined in area boss as female"
+  },
+  {
+    "tag": "description_flying",
+    "tag_definition": "is defined in area boss as flying"
+  },
+  {
+    "tag": "discription_ghost",
+    "tag_definition": "is defined in area boss as a ghost"
+  },
+  {
+    "tag": "discription_male",
+    "tag_definition": "is defined in area boss as male"
+  },
+  {
+    "tag": "discription_water",
+    "tag_definition": "is defined in area boss as water"
   },
   {
     "tag": "dispel_buff_foe_team",
@@ -225,11 +253,11 @@ const tagDefinition = [
   },
   {
     "tag": "heal",
-    "tag_definition": "Instigates any sort of healing. wildcard search of heal effects.  can be used when searching for things that feed the sunshine doll"
+    "tag_definition": "Instigates any sort of healing. wildcard search of heal effects.  can be used when searching for things that feed the sunshine doll.  Does not include \"Recover\" effects"
   },
   {
     "tag": "heal_affects_summon",
-    "tag_definition": "Do any of the healing effects work on summoned units"
+    "tag_definition": "At least one of the healing effects work on summoned units"
   },
   {
     "tag": "heal_down",
@@ -237,7 +265,7 @@ const tagDefinition = [
   },
   {
     "tag": "heal_self_only",
-    "tag_definition": "Heal effect that heals user alone.  IE lifesteal on sesshamaru.  not exclusive with other heal tags. kusa would have all heal tags"
+    "tag_definition": "Heal effect that heals user alone.  IE lifesteal on sesshamaru.  Does not exclude other heal related tags. "
   },
   {
     "tag": "heal_target",
@@ -245,7 +273,7 @@ const tagDefinition = [
   },
   {
     "tag": "heal_team",
-    "tag_definition": "AOE heal."
+    "tag_definition": "Heal effect that heals the entire team at one time.  "
   },
   {
     "tag": "heal_up",
@@ -257,7 +285,7 @@ const tagDefinition = [
   },
   {
     "tag": "infrequent_skill_use",
-    "tag_definition": "for shiki who rarely use skills or alternate between skills and normal attacks."
+    "tag_definition": "for shiki who rarely use skills or alternate between skills and normal attacks.  Skills that last more than one turn will get this tag."
   },
   {
     "tag": "instant_action",
@@ -273,11 +301,11 @@ const tagDefinition = [
   },
   {
     "tag": "layers_self",
-    "tag_definition": "has a skill that gains layers or stacks residing on itself.  this can be a flat buff or a named effect that is used by another skill"
+    "tag_definition": "Has a skill that gains layers or stacks residing on itself.  This can be a flat buff or a named effect that is used by another skill"
   },
   {
     "tag": "low_hp_skill",
-    "tag_definition": "has a skill that interacts differently when hp is lower.  this can be the shiki itself or others"
+    "tag_definition": "Has a skill that interacts differently when hp is lower.  This can be the shiki itself or others"
   },
   {
     "tag": "luck_reliant",
@@ -289,15 +317,15 @@ const tagDefinition = [
   },
   {
     "tag": "movebar_lower_target",
-    "tag_definition": "ST move bar reduction"
+    "tag_definition": "move bar reduction of a target that is either user selected or selected by conditions"
   },
   {
     "tag": "movebar_lower_team",
-    "tag_definition": "AOE move bar reduction"
+    "tag_definition": "move bar reduction of the entire opponent's team"
   },
   {
     "tag": "movebar_raise_self",
-    "tag_definition": "self move bar acceleration. IE shishio, hana,"
+    "tag_definition": "self move bar acceleration. IE shishio, Hana."
   },
   {
     "tag": "movebar_raise_target",
@@ -461,7 +489,7 @@ const tagDefinition = [
   },
   {
     "tag": "remove_cc_target",
-    "tag_definition": "removes a crowd control effect on target, player or conditionally chosen. IE demonic_shuten_doji as his is conditional"
+    "tag_definition": "removes a crowd control effect on target, player or conditionally chosen. IE Demonic Shuten Doji as his is conditional"
   },
   {
     "tag": "remove_cc_team",
@@ -493,7 +521,7 @@ const tagDefinition = [
   },
   {
     "tag": "shield_target",
-    "tag_definition": "Produces a shield on a single unit or defined set of units.  IE auzure_ichimokuren, ichimokuren, chocho"
+    "tag_definition": "Produces a shield on a single unit or defined set of units.  IE Auzure Ichimokuren, Ichimokuren, Chocho"
   },
   {
     "tag": "shield_team",
@@ -506,6 +534,10 @@ const tagDefinition = [
   {
     "tag": "skill_redirection",
     "tag_definition": "has a skill that prevents or redirects opponents ST skills in some manner"
+  },
+  {
+    "tag": "sleep",
+    "tag_definition": "Has a skill that inflicts the sleep effect"
   },
   {
     "tag": "slow",
